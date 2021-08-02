@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 规定编码为 UTF-8 -->
+    <meta charset="UTF-8">
+    <!-- 禁用缩放，兼容手机-->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <!-- IE使用Edge内核-->
+    <meta http-equiv="X-UA-Compatible" content="ie-edge">
+    <title>获取行政区域边界坐标</title>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=oEQ13lOLGGa4I1VLCjZZ0c0ip5m2xRHf"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="info">
+        <h3 id="title">南京疫情地图</h3>
+        <div id="infection">
+            <h4>感染人数</h4>
+        </div>
+        <div id="risk">
+            <h4>风险地区</h4>
+            <!-- 数据来源于 [卫生健康委]疫情风险等级查询 http://bmfw.www.gov.cn/yqfxdjcx/risk.html-->
+            <h5 id="high-risk">高风险地区</h5>
+            <h5 id="middle-risk">中风险地区</h5>
+        </div>
+    </div>
+
+    <div id="container"></div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
