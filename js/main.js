@@ -1,6 +1,6 @@
 // 设置获取今日和昨日的数据
 Date.prototype.format = function (fmt) {
-    var o = {
+    let o = {
         "M+": this.getMonth() + 1, //月份
         "d+": this.getDate(), //日
         "h+": this.getHours(), //小时
@@ -10,7 +10,7 @@ Date.prototype.format = function (fmt) {
         "S": this.getMilliseconds() //毫秒
     };
     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
+    for (let k in o)
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
@@ -21,6 +21,17 @@ let yesterday = set_yesterday.format("yyyy-MM-dd");
 let set_today = new Date();
 set_today.setDate(set_today.getDate()-1);
 let today= set_today.format("yyyy-MM-dd");
+
+let set_curr = new Date();
+set_curr.setDate(set_curr.getDate());
+let curr = set_curr.format("yyyy-MM-dd");
+
+$info = $("#info");
+$update = $(`<div id="update"></div>`);
+$info.append($update);
+$update.append(`<p>数据最后更新时间: </p>`);
+$update.append(`<p>${curr}</p>`)
+$update.append(`<p>Copyright © 2021 norayao</p>`)
 
 
 // 百度地图
@@ -43,7 +54,7 @@ const gc = new BMap.Geocoder();
 geolocation.enableSDKLocation();
 geolocation.getCurrentPosition(function(r){
     if(this.getStatus() === BMAP_STATUS_SUCCESS){
-        var mk = new BMap.Marker(r.point,{icon: icon_marker});
+        let mk = new BMap.Marker(r.point,{icon: icon_marker});
         map.addOverlay(mk);
         map.panTo(r.point);
         // alert('您的位置：' + r.point.lng + ',' + r.point.lat);
@@ -89,7 +100,7 @@ const risk = () => {
 (async function () {
     // 获取感染区域数据
     let r1 = await infection();
-    let districts = r1[today];
+    let districts = r1[Object.keys(r1)[0]];
     // console.log('第一次请求->', r1);
     // console.log(districts);
 
@@ -100,22 +111,19 @@ const risk = () => {
     // console.log('第二次请求->', r2);
     // console.log(middle,high);
     let $high_risk = $("#high-risk");
-    for(each_high in high){
+    for(let each_high in high){
 
         let district = each_high;
         let num = Object.keys(high[each_high]).length;
         $high_risk.after(`<span>${district}: ${num}个</span>`)
     }
     let $middle_risk = $("#middle-risk");
-    for(each_middle in middle){
+    for(let each_middle in middle){
         let district = each_middle;
         let num = Object.keys(middle[each_middle]).length;
         $middle_risk.after(`<span>${district}: ${num}个</span>`);
 
     }
-
-
-
     // 根据感染数对区域排序
     const sort_districts = Object.keys(districts).sort(function(a,b){return districts[b]-districts[a]});
 
@@ -129,8 +137,8 @@ const risk = () => {
 
         // 右侧浮窗显示当前感染人数
         let $infection = $("#infection");
-        let $district_intection = $(`<span id="district-name">${district_name}: ${current_value}例</span>`)
-        $infection.append($district_intection);
+        let $district_infection = $(`<span id="district-name">${district_name}: ${current_value}例</span>`)
+        $infection.append($district_infection);
 
         // 地图色块显示
         let district_opacity = 0;
@@ -169,16 +177,80 @@ const risk = () => {
             // 行政区域的点有多少个
             let count = result.boundaries.length;
 
-            //建立多边形覆盖物
-            for(var i = 0; i < count; i++){
-                var ply = new BMap.Polygon(result.boundaries[i], {strokeWeight: 2, strokeColor: boundary_color, fillColor: district_color, fillOpacity: district_opacity});
+            let $tip = $('#tip');
 
+            //建立多边形覆盖物
+            for(let i = 0; i < count; i++){
+                let ply = new BMap.Polygon(result.boundaries[i], {strokeWeight: 2, strokeColor: boundary_color, fillColor: district_color, fillOpacity: district_opacity});
                 //添加覆盖物
                 map.addOverlay(ply);
+
+                // 点击在指定位置显示当前地区疫情情况
+                ply.onmouseover = (e) =>{
+                    $tip.append(`<h5>${district_name}</h5>`);
+                    $tip.append(`<span id="district-name">${district_name}: ${current_value}例</span>`);
+                    let high_risk = high[district_name];
+                    if (high_risk !== undefined){
+                        for (let each_area in high_risk){
+                            $tip.append(`<span id="high-risk-tip">高风险：${high_risk[each_area]}</span>`);
+                        }
+                    }
+                    let middle_risk = middle[district_name];
+                    if (middle_risk !== undefined){
+                        for (let middle_area in middle_risk){
+                            $tip.append(`<span id="middle-risk-tip">中风险：${middle_risk[middle_area]}</span>`);
+                        }
+                    }
+
+                    // let x = e.clientX - parseInt($tip.css("width")) ;
+                    // let y = e.clientY- parseInt($tip.css("height"));
+
+                    let x = e.pixel.x - parseInt($tip.css("width")) ;
+                    let y = e.pixel.y- parseInt($tip.css("height"));
+
+                    $tip.attr('style', `margin-left: ${x}px; margin-top: ${y}px;`);
+
+                }
+                ply.onmouseout = () =>{
+                    $tip.children('span').remove();
+                    $tip.children('h5').remove();
+                }
+                ply.onclick = (e) =>{
+                    $tip.children('span').remove();
+                    $tip.children('h5').remove();
+                    $tip.append(`<h5>${district_name}</h5>`);
+
+                    $tip.append(`<span id="district-name">${district_name}: ${current_value}例</span>`);
+                    let high_risk = high[district_name];
+                    if (high_risk !== undefined){
+                        for (let each_area in high_risk){
+                            $tip.append(`<span id="high-risk-tip">高风险：${high_risk[each_area]}</span>`);
+                        }
+                    }
+                    let middle_risk = middle[district_name];
+                    if (middle_risk !== undefined){
+                        for (let middle_area in middle_risk){
+                            $tip.append(`<span id="middle-risk-tip">中风险：${middle_risk[middle_area]}</span>`);
+                        }
+                    }
+
+                    // let x = e.clientX - parseInt($tip.css("width")) ;
+                    // let y = e.clientY- parseInt($tip.css("height"));
+
+                    let x = e.pixel.x - parseInt($tip.css("width")) ;
+                    let y = e.pixel.y- parseInt($tip.css("height"));
+
+                    $tip.attr('style', `margin-left: ${x}px; margin-top: ${y}px;`);
+
+                }
+
+
+
             }
 
         });
     }
+
 
 })();
 
