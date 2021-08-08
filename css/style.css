@@ -19,119 +19,254 @@ ul,ol{
 img {
     max-width: 100%;
 }
+/* PC: screen-size > 500px */
+@media (min-width: 500px) {
+    body{
+        display: block;
+    }
+    #container {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
 
-#container{
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-}
-#info{
-    float:right;
-    background: aliceblue;
-    opacity: 0.8;
-    height: 100vh;
-    width: 160px;
-    overflow: auto;
-    min-height:100%;
-    position:relative;
-}
-#infection > h4, #risk > h4,h5{
-    width: 100%;
-    text-align: center;
-}
-#title{
-    width: 100%;
-    height: 35px;
-    float: inherit;
-    text-align: center;
-    color: #3099e5;
-    line-height: 35px;
-    font-size: 24px;
-}
+    #info {
+        float: right;
+        background: aliceblue;
+        opacity: 0.8;
+        height: 100vh;
+        width: 160px;
+        overflow: auto;
+        min-height: 100%;
+        position: relative;
+    }
 
-#district-name{
-    font-size: 12px;
-    color: #545454;
-    display: block;
-    width: 100%;
-    text-align: center;
-    margin-top: 4px;
-}
+    #infection > h4, #risk > h4, h5 {
+        width: 100%;
+        text-align: center;
+    }
 
-#risk > h4{
-    margin-top: 5px;
-}
-#high-risk{
-    color: #cb2823;
-    margin-top: 5px;
-}
+    #title {
+        width: 100%;
+        height: 35px;
+        float: inherit;
+        text-align: center;
+        color: #3099e5;
+        line-height: 35px;
+        font-size: 24px;
+    }
 
-#middle-risk{
-    color: #ff8b4f;
-    margin-top: 5px;
-}
-#risk > span{
-    font-size: 12px;
-    color: #545454;
-    display: block;
-    width: 100%;
-    text-align: center;
-    margin-top: 2px;
-}
-#update{
-    font-size: 8px;
-    color: #787777;
-    display: block;
-    width: 100%;
-    margin-top: 2px;
-    text-align: center;
-}
-#tip{
-    display: block;
-    float: left;
-    background: aliceblue;
-    opacity: 0.8;
-    border-radius: 10px;
-}
-#tip > span{
-    margin-left: 4px;
-    margin-right: 4px;
-}
-#high-risk-tip{
-    font-size: 13px;
-    color: #cb2823;
-    display: block;
+    #district-name {
+        font-size: 12px;
+        color: #545454;
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 4px;
+    }
 
-    text-align: center;
-    margin-top: 2px;
-    font-weight: bold;
-}
-#middle-risk-tip{
-    font-size: 12px;
-    color: #ff8b4f;
-    display: block;
-    text-align: center;
-    margin-top: 2px;
-    font-weight: bold;
-}
-#update{
-    position:fixed;
-    bottom:0px;
-    left:0px;
+    #risk > h4 {
+        margin-top: 5px;
+    }
 
+    #high-risk {
+        color: #cb2823;
+        margin-top: 5px;
+    }
+
+    #middle-risk {
+        color: #ff8b4f;
+        margin-top: 5px;
+    }
+
+    #risk > span {
+        font-size: 12px;
+        color: #545454;
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 2px;
+    }
+
+    #update {
+        font-size: 8px;
+        color: #787777;
+        display: block;
+        width: 100%;
+        margin-top: 2px;
+        text-align: center;
+    }
+
+    #tip {
+        display: block;
+        float: left;
+        background: aliceblue;
+        opacity: 0.8;
+        border-radius: 10px;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    #tip > span {
+        margin-left: 4px;
+        margin-right: 4px;
+    }
+
+    #high-risk-tip {
+        font-size: 13px;
+        color: #cb2823;
+        display: block;
+
+        text-align: center;
+        margin-top: 2px;
+        font-weight: bold;
+    }
+
+    #middle-risk-tip {
+        font-size: 12px;
+        color: #ff8b4f;
+        display: block;
+        text-align: center;
+        margin-top: 2px;
+        font-weight: bold;
+    }
+
+    #update {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+    }
+
+    #update > p:first-child {
+        margin-right: 30px;
+        text-align: right;
+    }
+
+    #update > p:nth-child(2) {
+        margin-right: 40px;
+        text-align: right;
+        font-size: 2px;
+    }
+
+    #update > p:nth-child(3) {
+        margin-right: 10px;
+        text-align: right;
+    }
+    #current-area{
+        display: none;
+    }
+    #current-info{
+        display: none;
+    }
 }
-#update > p:first-child{
-    margin-right: 30px;
-    text-align: right;
-}
-#update > p:nth-child(2){
-    margin-right: 40px;
-    text-align: right;
-    font-size: 2px;
-}
-#update > p:nth-child(3){
-    margin-right: 10px;
-    text-align: right;
+/* Pad and Mobile*/
+@media (max-width: 500px) {
+
+    #container {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+    #info{
+        display: none;
+    }
+
+    #tip{
+        float: left;
+        background: aliceblue;
+        opacity: 0.8;
+        border-radius: 6px;
+        padding-left: 4px;
+        padding-right: 4px;
+        font-size: 14px;
+    }
+    #tip > span {
+        margin-left: 4px;
+        margin-right: 4px;
+        min-width: 100%;
+        overflow: inherit;
+        display: block;
+    }
+    #high-risk-area{
+        color: #cb2823;
+        font-weight: bolder;
+
+    }
+    #middle-risk-area{
+        color: #ff8b4f;
+    }
+    #more-info{
+        color: #535353;
+    }
+    #current-area{
+        display: none;
+        background: aliceblue;
+        width: 100%;
+        height: 300px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        border-radius: 4px;
+
+
+        /* 置于底部 */
+        position:absolute;
+        left:0;
+        bottom:0;
+    }
+    #current-area > span {
+        margin: 4px 0;
+        padding: 0 10px;
+        min-width: 100%;
+        overflow: inherit;
+        display: block;
+    }
+    #current-area > h5{
+        padding-left: 10px;
+        font-size: 20px;
+        padding-top: 10px;
+    }
+    #high-risk-tip{
+        color: #cb2823;
+    }
+    #middle-risk-tip{
+        color: #ff8b4f;
+    }
+    #close-current-area{
+        float: right;
+        margin-right: 14px;
+        width: 25px;
+        height: 25px;
+        margin-top: 5px;
+    }
+
+    #current-info{
+        float:left;
+        background: white;
+        opacity: 0.8;
+        width: 100%;
+        display: block;
+        text-align: center;
+    }
+    #current-info > table{
+        justify-content: center;
+        text-align: center;
+        display: flex;
+    }
+    #current-info > table > tbody > tr > td{
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+    }
+    .total-num{
+        color: #3099e5;
+    }
+    .total-high{
+        color: #cb2823;
+    }
+    .total-middle{
+        color: #ff8b4f;
+    }
 }

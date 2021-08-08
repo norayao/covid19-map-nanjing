@@ -9,6 +9,8 @@
     <!-- IE使用Edge内核-->
     <meta http-equiv="X-UA-Compatible" content="ie-edge">
     <title>南京疫情地图</title>
+    <!--设置ico图标-->
+    <link rel="shortcut icon" href="img/marker.ico">
     <!-- 使用 https 调用 百度地图 JavaScript API v2.0 -->
     <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=oEQ13lOLGGa4I1VLCjZZ0c0ip5m2xRHf&s=1"></script>
     <link rel="stylesheet" href="css/style.css">
@@ -22,14 +24,31 @@
         <div id="risk">
             <h4>风险地区</h4>
             <!-- 数据来源于 [卫生健康委]疫情风险等级查询 http://bmfw.www.gov.cn/yqfxdjcx/risk.html-->
-            <h5 id="high-risk">高风险地区</h5>
-            <h5 id="middle-risk">中风险地区</h5>
         </div>
+    </div>
+    <div id="current-info">
+        <h3>南京疫情地图</h3>
+        <table>
+            <tbody>
+            <tr>
+                <td class="total-num">感染人数</td>
+                <td class="total-high">高风险</td>
+                <td class="total-middle">中风险</td>
+            </tr>
+            <tr>
+                <td class="total-num" id="total-num"></td>
+                <td class="total-high" id="total-high"></td>
+                <td class="total-middle" id="total-middle"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
     <div id="container"></div>
     <div id="tip"></div>
-
+    <div id="current-area">
+        <img src="img/close.png" id="close-current-area"  alt="close-current-area">
+    </div>
 
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
